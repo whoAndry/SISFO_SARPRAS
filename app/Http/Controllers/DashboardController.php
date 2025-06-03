@@ -13,6 +13,17 @@ class DashboardController extends Controller
         $totalKategori = KategoriBarang::count();
         $totalBarang = DataBarang::count(); // total data barang (bukan stok)
 
-        return view('home', compact('totalKategori', 'totalBarang'));
+        // Hitung jumlah barang berdasarkan kondisi
+        $barangBaik = DataBarang::where('status', 'baik')->count();
+        $barangRusak = DataBarang::where('status', 'rusak')->count();
+        $barangHilang = DataBarang::where('status', 'hilang')->count();
+
+        return view('home', compact(
+            'totalKategori',
+            'totalBarang',
+            'barangBaik',
+            'barangRusak',
+            'barangHilang'
+        ));
     }
 }

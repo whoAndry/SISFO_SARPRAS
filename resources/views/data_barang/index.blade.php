@@ -4,15 +4,34 @@
 <style>
     .card-custom {
         background-color: #f9f9f9;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         border: none;
         border-radius: 0.75rem;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        will-change: transform;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeSlideUp 0.6s forwards;
     }
 
     .card-custom:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        transform: translateY(-12px) scale(1.18);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        z-index: 20;
+    }
+
+    .card-custom:nth-child(1) { animation-delay: 0.1s; }
+    .card-custom:nth-child(2) { animation-delay: 0.2s; }
+    .card-custom:nth-child(3) { animation-delay: 0.3s; }
+    .card-custom:nth-child(4) { animation-delay: 0.4s; }
+    .card-custom:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeSlideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .card-title {
@@ -74,13 +93,41 @@
     .search-form {
         background-color: #fff;
         border-radius: 0.75rem;
-        padding: 1rem;
-        box-shadow: 0 0 10px rgba(56, 54, 87, 0.1);
+        padding: 1rem 1.5rem;
+        box-shadow: 0 0 12px rgba(56, 54, 87, 0.1);
+        transition: box-shadow 0.3s ease;
     }
 
-    .search-form label {
+    .search-form:hover {
+        box-shadow: 0 4px 20px rgba(56, 54, 87, 0.2);
+    }
+
+    .search-label {
         font-weight: 600;
         color: #383657;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    .input-icon input {
+        padding-left: 2.25rem;
+    }
+
+    @media (max-width: 767.98px) {
+        .search-form .btn {
+            width: 100% !important;
+        }
     }
 </style>
 
@@ -95,14 +142,17 @@
     {{-- Form Search dan Filter --}}
     <form method="GET" action="{{ route('data_barang.index') }}" class="row search-form mb-4 g-3 align-items-end">
         <div class="col-md-4">
-            <label for="search" class="form-label">Cari Nama Barang</label>
-            <input type="text" name="search" id="search" class="form-control"
-                value="{{ request('search') }}" placeholder="Contoh: Proyektor">
+            <label for="search" class="search-label">Cari Nama Barang</label>
+            <div class="input-icon">
+                <i class="bi bi-search"></i>
+                <input type="text" name="search" id="search" class="form-control"
+                       value="{{ request('search') }}" placeholder="Contoh: Proyektor">
+            </div>
         </div>
         <div class="col-md-4">
-            <label for="kategori_id" class="form-label">Filter Kategori</label>
+            <label for="kategori_id" class="search-label">Filter Kategori</label>
             <select name="kategori_id" id="kategori_id" class="form-select">
-                <option value="">-- Semua Kategori --</option>
+                <option value=""> Semua Kategori </option>
                 @foreach($kategoriBarangs as $kategori)
                     <option value="{{ $kategori->id }}"
                         {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>

@@ -9,7 +9,7 @@
   <style>
     :root {
       --primary-bg: #1b1a27;
-      --hover-bg: #2a283a; 
+      --hover-bg: #2a283a;
       --content-bg: #f8f9fa;
       --text-light: #f0f0f0;
       --text-dark: #333333;
@@ -32,7 +32,7 @@
       height: 100vh;
       padding: 1.5rem;
       position: fixed;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
       transition: var(--transition);
       overflow-y: auto;
     }
@@ -178,7 +178,7 @@
       border-radius: var(--border-radius);
       min-height: calc(100vh - 100px);
       margin: 1.5rem;
-      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     }
 
     .content-area h3 {
@@ -196,13 +196,16 @@
       .sidebar {
         display: none;
       }
+
       .content-area {
         margin: 1rem;
         padding: 1.5rem;
       }
+
       .topbar {
         padding: 1rem;
       }
+
       .search-box {
         max-width: 200px;
       }
@@ -223,6 +226,7 @@
               <i class="bi bi-house-door nav-icon"></i> <span>Dashboard</span>
             </a>
           </li>
+
           <li class="nav-item has-submenu {{ request()->is('data_barang*') || request()->is('kategori_barang*') ? 'open' : '' }}">
             <a class="nav-link" href="#">
               <i class="bi bi-database nav-icon"></i> <span>Barang</span>
@@ -240,6 +244,7 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item has-submenu {{ request()->is('peminjaman*') || request()->is('pengembalian*') ? 'open' : '' }}">
             <a class="nav-link" href="#">
               <i class="bi bi-arrow-left-right nav-icon"></i> <span>Transaksi</span>
@@ -257,31 +262,33 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-submenu">
+
+          <li class="nav-item has-submenu {{ request()->is('laporan-barang') || request()->is('laporan-peminjaman') || request()->is('laporan-pengembalian') ? 'open' : '' }}">
             <a class="nav-link" href="#">
               <i class="bi bi-file-earmark-text nav-icon"></i> <span>Laporan</span>
             </a>
-            <ul class="submenu">
+            <ul class="submenu {{ request()->is('laporan-barang') || request()->is('laporan-peminjaman') || request()->is('laporan-pengembalian') ? 'show' : '' }}">
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <i class="bi bi-file-text nav-icon"></i> <span>Laporan Stok Barang</span>
+                <a class="nav-link {{ request()->is('laporan-barang') ? 'active' : '' }}" href="{{ route('laporan.barang') }}">
+                  <i class="bi bi-file-earmark-bar-graph nav-icon"></i> <span>Laporan Barang</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ request()->is('laporan-peminjaman') ? 'active' : '' }}" href="{{ route('laporan.peminjaman') }}">
                   <i class="bi bi-file-arrow-up nav-icon"></i> <span>Laporan Peminjaman</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ request()->is('laporan-pengembalian') ? 'active' : '' }}" href="{{ route('laporan.pengembalian') }}">
                   <i class="bi bi-file-arrow-down nav-icon"></i> <span>Laporan Pengembalian</span>
                 </a>
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-people nav-icon"></i> <span>Users</span>
+            <a class="nav-link {{ request()->is('pengguna') ? 'active' : '' }}" href="{{ route('pengguna.index') }}">
+              <i class="bi bi-people nav-icon"></i> <span>Pengguna</span>
             </a>
           </li>
         </ul>
@@ -300,12 +307,12 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
                 <a class="dropdown-item" href="#">
-                  <i class="bi bi-person me-2"></i>Profil <span class="me-2">{{ Auth::user()->name }}</span>
+                  <i class="bi bi-person me-2"></i> Profil <span class="me-2">{{ Auth::user()->name }}</span>
                 </a>
               </li>
               <li>
                 <a class="dropdown-item" href="#">
-                  <i class="bi bi-gear me-2"></i>Pengaturan
+                  <i class="bi bi-gear me-2"></i> Pengaturan
                 </a>
               </li>
               <li><hr class="dropdown-divider"></li>
@@ -313,7 +320,7 @@
                 <form action="{{ route('logout') }}" method="POST">
                   @csrf
                   <button class="dropdown-item text-danger" type="submit">
-                    <i class="bi bi-box-arrow-right me-2"></i>Logout <span class="me-2">{{ Auth::user()->name }}</span>
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout <span class="me-2">{{ Auth::user()->name }}</span>
                   </button>
                 </form>
               </li>

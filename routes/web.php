@@ -7,6 +7,11 @@ use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\DataBarangController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\LaporanBarangController;
+use App\Http\Controllers\LaporanPeminjamanController;
+use App\Http\Controllers\LaporanPengembalianController;
+use App\Http\Controllers\PenggunaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +55,22 @@ Route::post('/peminjaman/{id}/status/{status}', [PeminjamanController::class, 'u
 Route::get('/pengembalian', [PengembalianController::class, 'index'])->name('pengembalian.index');
 Route::post('/pengembalian', [PengembalianController::class, 'store']);
 
+Route::get('/laporan-barang', [LaporanBarangController::class, 'index'])->name('laporan.barang');
+Route::get('/laporan-barang/pdf', [LaporanBarangController::class, 'exportPdf'])->name('laporan.barang.pdf');
+
+Route::get('/laporan-peminjaman', [LaporanPeminjamanController::class, 'index'])->name('laporan.peminjaman');
+Route::get('/laporan-peminjaman/pdf', [LaporanPeminjamanController::class, 'exportPdf'])->name('laporan.peminjaman.pdf');
+
+Route::get('/laporan/pengembalian', [LaporanPengembalianController::class, 'index'])->name('laporan.pengembalian');
+Route::get('/laporan/pengembalian/pdf', [LaporanPengembalianController::class, 'exportPdf'])->name('laporan.pengembalian.pdf');
+
+Route::resource('pengguna', PenggunaController::class);
+
+
+
 
 
 // Protected page - hanya bisa diakses jika sudah login
+
 
 
